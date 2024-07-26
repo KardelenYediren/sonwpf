@@ -1,0 +1,17 @@
+C:\Users\karde\Desktop\Codeo\GeneralSettings2\GeneralSettings2\obj\Debug\GeneralSettings2.csproj.AssemblyReference.cache
+C:\Users\karde\Desktop\Codeo\GeneralSettings2\GeneralSettings2\obj\Debug\GeneralSettings2.csproj.SuggestedBindingRedirects.cache
+C:\Users\karde\Desktop\Codeo\GeneralSettings2\GeneralSettings2\obj\Debug\MainWindow.g.cs
+C:\Users\karde\Desktop\Codeo\GeneralSettings2\GeneralSettings2\obj\Debug\App.g.cs
+C:\Users\karde\Desktop\Codeo\GeneralSettings2\GeneralSettings2\obj\Debug\GeneralSettings2_MarkupCompile.cache
+C:\Users\karde\Desktop\Codeo\GeneralSettings2\GeneralSettings2\obj\Debug\GeneralSettings2_MarkupCompile.lref
+C:\Users\karde\Desktop\Codeo\GeneralSettings2\GeneralSettings2\bin\Debug\GeneralSettings2.exe.config
+C:\Users\karde\Desktop\Codeo\GeneralSettings2\GeneralSettings2\bin\Debug\GeneralSettings2.exe
+C:\Users\karde\Desktop\Codeo\GeneralSettings2\GeneralSettings2\bin\Debug\GeneralSettings2.pdb
+C:\Users\karde\Desktop\Codeo\GeneralSettings2\GeneralSettings2\obj\Debug\MainWindow.baml
+C:\Users\karde\Desktop\Codeo\GeneralSettings2\GeneralSettings2\obj\Debug\GeneralSettings2.g.resources
+C:\Users\karde\Desktop\Codeo\GeneralSettings2\GeneralSettings2\obj\Debug\GeneralSettings2.Properties.Resources.resources
+C:\Users\karde\Desktop\Codeo\GeneralSettings2\GeneralSettings2\obj\Debug\GeneralSettings2.csproj.GenerateResource.cache
+C:\Users\karde\Desktop\Codeo\GeneralSettings2\GeneralSettings2\obj\Debug\GeneralSettings2.csproj.CoreCompileInputs.cache
+C:\Users\karde\Desktop\Codeo\GeneralSettings2\GeneralSettings2\obj\Debug\GeneralSettings2.exe
+C:\Users\karde\Desktop\Codeo\GeneralSettings2\GeneralSettings2\obj\Debug\GeneralSettings2.pdb
+C:\Users\karde\Desktop\Codeo\GeneralSettings2\GeneralSettings2\obj\Debug\GeneratedInternalTypeHelper.g.cs

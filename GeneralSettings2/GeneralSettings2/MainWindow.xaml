@@ -1,0 +1,713 @@
+﻿<Window x:Class="GeneralSettings.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:GeneralSettings"
+        mc:Ignorable="d"
+        Title="MainWindow" 
+        Height="650"
+        Width="500"
+        MinHeight="180"
+        WindowStyle="None"
+        ResizeMode="CanResizeWithGrip"
+        Background="Transparent"
+        AllowsTransparency="True"
+        MouseDown="Window_MouseDown"
+        SizeChanged="Window_SizeChanged"
+        Loaded="MainWindow_Loaded">
+
+
+    <Window.Resources>
+        <!-- Button Stili -->
+        <Style x:Key="RoundedButtonStyle" TargetType="Button">
+
+
+            <Setter Property="Padding" Value="10,5"/>
+            <Setter Property="BorderBrush" Value="Transparent"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="FontSize" Value="14"/>
+
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}"
+                                CornerRadius="5"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}">
+                            <ContentPresenter HorizontalAlignment="Center"
+                                              VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="RoundedButtonStyle1" TargetType="Button">
+
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Background" Value="DeepSkyBlue"/>
+            <Setter Property="Padding" Value="10,5"/>
+            <Setter Property="BorderBrush" Value="Transparent"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="FontSize" Value="14"/>
+
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}"
+                                CornerRadius="5"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}">
+                            <ContentPresenter HorizontalAlignment="Center"
+                                              VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+
+
+    <!-- DPI ayarlarını otomatik olarak ayarlamak için DpiDecorator kullanıyoruz -->
+    <local:DpiDecorator>
+        <!-- Ana Grid, tek bir sütun tanımı -->
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="573*"/>
+                <RowDefinition Height="77*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- Ana Border, köşeleri yuvarlatılmış arka plan -->
+            <Border Background="#c0c0c0" CornerRadius="20" Grid.ColumnSpan="1" Grid.RowSpan="2">
+                <Grid Margin="0,0,0,10">
+                    <!-- İç Grid'in kolon tanımları -->
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="100"/>
+                        <!-- Sol kolon, sabit genişlik -->
+                        <ColumnDefinition Width="*"/>
+                        <!-- Orta kolon, esnek genişlik -->
+                        <ColumnDefinition Width="100"/>
+                        <!-- Sağ kolon, sabit genişlik -->
+                    </Grid.ColumnDefinitions>
+
+                    <!-- İç Grid'in satır tanımları -->
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="31"/>
+                        <!-- Üst satır, sabit yükseklik -->
+                        <RowDefinition/>
+                        <!-- Orta satır, esnek yükseklik -->
+                        <RowDefinition Height="40"/>
+                        <!-- Alt satır, sabit yükseklik -->
+                    </Grid.RowDefinitions>
+
+                    <!-- Üst satır arka plan ve köşe yuvarlama -->
+                    <Border Grid.ColumnSpan="3" Background="#252525" CornerRadius="20,20,0,0" Margin="0,0,0,1"/>
+
+                    <!-- Başlık etiketi -->
+                    <Label Content="  General Settings"
+                           Foreground="Gray"
+                           FontWeight="SemiBold"
+                           Grid.Column="0" 
+                           Height="30" 
+                           VerticalAlignment="Center" 
+                           Grid.ColumnSpan="2" 
+                           Margin="0,0,289,0"/>
+
+                    <!-- Pencere kontrol butonları (simge durumuna küçültme, büyütme/küçültme, kapatma) -->
+                    <StackPanel HorizontalAlignment="Center"
+                                Orientation="Horizontal"
+                                Grid.Row="0"
+                                Grid.Column="2" Width="84">
+                        <!-- Simge durumuna küçültme butonu -->
+                        <Button Width="25" Height="25"
+                                Content="_"
+                                Background="Transparent"
+                                BorderThickness="0"
+                                Foreground="Gray"
+                                FontWeight="Bold"
+                                Margin="0,0,0,5"
+                                Click="ButtonMinimize_Click"/>
+
+                        <!-- Pencereyi büyütme/küçültme butonu -->
+                        <Button Width="30" Height="28"
+                                Content="□"
+                                Background="Transparent"
+                                BorderThickness="0"
+                                Foreground="Gray"
+                                FontWeight="Bold"
+                                Click="WindowStateButton_Click"/>
+
+                        <!-- Pencereyi kapatma butonu -->
+                        <Button Width="30" Height="20"
+                                Content="❌"
+                                Background="Transparent"
+                                BorderThickness="0"
+                                Foreground="Gray"
+                                FontWeight="Bold"
+                                Click="CloseButton_Click"/>
+                    </StackPanel>
+
+                    <!-- Ayarlar için TabControl -->
+                    <TabControl x:Name="MainTabControl" Grid.Row="1" Grid.ColumnSpan="3" Margin="10,10,10,0" >
+                        <!-- Grafik Ayarları Sekmesi -->
+                        <TabItem Header="Graphic Settings">
+                            <ScrollViewer>
+                                <StackPanel Margin="10">
+                                    <!-- Grafik ayarları açıklama metinleri ve seçenekleri -->
+                                    <TextBlock Text="Graphics Setting" FontWeight="Bold" FontSize="14" TextWrapping="Wrap" TextAlignment="Justify"/>
+                                    <TextBlock Text="Note: Changing the graphics setting does not take effect until AutoCase is restarted." Margin="0,10,0,20" TextWrapping="Wrap" TextAlignment="Justify"/>
+
+                                    <!-- Grafik ayarları için radyo butonları -->
+                                    <RadioButton GroupName="GraphicsSetting" Content="Quality" Margin="0,0,0,10"/>
+                                    <TextBlock Text="Use this setting for the highest quality realistic visualization." Margin="20,0,0,10" TextWrapping="Wrap" TextAlignment="Justify"/>
+
+                                    <RadioButton GroupName="GraphicsSetting" Content="Performance" IsChecked="True" Margin="0,0,0,10"/>
+                                    <TextBlock Text="Use this setting when performance is desired over realistic visualization such as in modeling." Margin="20,0,0,10" TextWrapping="Wrap" TextAlignment="Justify"/>
+
+                                    <RadioButton GroupName="GraphicsSetting" Content="Conservative" Margin="0,0,0,10"/>
+                                    <TextBlock Text="Use this setting for conservative graphics hardware use with" Margin="20,0,0,10" TextWrapping="Wrap" TextAlignment="Justify"/>
+
+                                    <CheckBox Content="Software graphics" Margin="0,0,0,10"/>
+                                    <TextBlock Text="Use only for systems with unrecognized graphics hardware or when graphics hardware does not support desired functionality." Margin="20,0,0,10" TextWrapping="Wrap" TextAlignment="Justify"/>
+                                </StackPanel>
+                            </ScrollViewer>
+                        </TabItem>
+
+                        <!-- Diğer ayar sekmeleri -->
+                        <TabItem Header="Display">
+                            <ScrollViewer>
+                                <StackPanel Margin="10">
+                                    <GroupBox Header="Display" Margin="0,10,0,0">
+                                        <StackPanel Margin="10,5,0,0">
+                                            <StackPanel Orientation="Horizontal" Margin="0,10,0,10" >
+                                                <TextBlock Text="View transition time (seconds)" Width="215"/>
+                                                <TextBlock Text="Minimum frame rate (Hz)" Width="202"/>
+                                            </StackPanel>
+                                            <StackPanel Orientation="Horizontal" Margin="0,10,0,10" Height="30" >
+                                                <StackPanel Orientation="Vertical" Width="200">
+                                                    <Slider Value="2" Minimum="0" Maximum="3" SmallChange="1" LargeChange="10" TickPlacement="BottomRight" TickFrequency="1" VerticalAlignment="Top"/>
+                                                </StackPanel>
+                                                <StackPanel Orientation="Vertical" Width="225">
+                                                    <Slider Value="5" Minimum="0" Maximum="20" SmallChange="1" LargeChange="10" Width="200" TickPlacement="BottomRight" TickFrequency="1" VerticalAlignment="Top"/>
+                                                </StackPanel>
+                                            </StackPanel>
+                                            <StackPanel >
+                                                <StackPanel Orientation="Horizontal" Margin="0,0,0,10" >
+                                                    <TextBlock Text="0" Width="190"/>
+                                                    <TextBlock Text="3" Width="23"/>
+                                                    <TextBlock Text="0" Width="189"/>
+                                                    <TextBlock Text="20" />
+                                                </StackPanel>
+                                            </StackPanel>
+                                            <StackPanel Orientation="Vertical" Margin="0,10,0,0" >
+                                                <TextBlock Text="Display quality:" />
+                                                <StackPanel Orientation="Horizontal" Margin="0,10,0,10">
+                                                    <StackPanel Orientation="Horizontal" Margin="10,5,0,10" Width="202">
+                                                        <ComboBox Width="115" Margin="0,5,0,10" HorizontalContentAlignment="Center">
+                                                            <ComboBoxItem Content="Smoother"/>
+                                                            <ComboBox.ItemContainerStyle>
+                                                                <Style TargetType="ComboBoxItem">
+                                                                    <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                                                                </Style>
+                                                            </ComboBox.ItemContainerStyle>
+                                                        </ComboBox>
+
+                                                    </StackPanel>
+                                                </StackPanel>
+                                            </StackPanel>
+                                        </StackPanel>
+                                    </GroupBox>
+                                    <GroupBox Header="3D Navigation" Margin="0,10,0,0" >
+                                        <StackPanel Margin="10,5,0,0">
+                                            <StackPanel Orientation="Horizontal" Margin="0,10,0,10">
+                                                <TextBlock Text="Default Orbit Type:" Width="202"/>
+                                                <TextBlock Text="Zoom Behavior:" Width="202"/>
+                                            </StackPanel>
+                                            <StackPanel Orientation="Horizontal" Margin="0,0,0,10" Height="39" >
+                                                <StackPanel Orientation="Vertical">
+                                                    <RadioButton Content="Free" GroupName="OrbitType"  Margin="20,0,0,5"/>
+                                                    <RadioButton Content="Constrained" GroupName="OrbitType"  Margin="20,0,0,5"/>
+                                                </StackPanel>
+                                                <StackPanel Orientation="Vertical" >
+                                                    <CheckBox Content="Reverse direction"  Margin="120,0,0,5"/>
+                                                    <CheckBox Content="Zoom to cursor"  Margin="120,0,0,5"/>
+                                                </StackPanel>
+                                            </StackPanel>
+
+
+                                            <StackPanel Orientation="Horizontal" Margin="0,10,0,10">
+                                                <TextBlock Text="Origin 3D indicator:" Width="202" />
+                                            </StackPanel>
+                                            <StackPanel Orientation="Horizontal" Margin="0,0,0,10" Height="39" >
+                                                <StackPanel Orientation="Vertical">
+                                                    <CheckBox Content="Show Origin 3D indicator" Margin="20,0,0,5"/>
+                                                    <CheckBox Content="Show Origin XYZ axis labels"  Margin="20,0,0,5"/>
+                                                </StackPanel>
+                                            </StackPanel>
+                                        </StackPanel>
+                                    </GroupBox>
+                                </StackPanel>
+                            </ScrollViewer>
+                        </TabItem>
+
+                        <TabItem Header="Project Settings">
+                            <ScrollViewer>
+                                <StackPanel Margin="10">
+                                    <GroupBox Header="Measurement Units" Margin="0,0,0,10">
+                                        <StackPanel Margin="10,5,0,0">
+                                            <RadioButton Content="Millimeters" GroupName="MeasurementUnits" Margin="0,0,0,5"/>
+                                            <RadioButton Content="Inches" GroupName="MeasurementUnits" Margin="0,0,0,5"/>
+                                        </StackPanel>
+                                    </GroupBox>
+                                    <GroupBox Header="VNotching" Margin="0,0,0,10">
+                                        <StackPanel Margin="10,5,0,0">
+                                            <StackPanel Orientation="Horizontal" Margin="0,0,0,5">
+                                                <RadioButton Content="On" GroupName="VNotching" Margin="0,0,20,0"/>
+                                                <RadioButton Content="Off" GroupName="VNotching"/>
+                                            </StackPanel>
+                                            <StackPanel Orientation="Horizontal">
+                                                <TextBlock Text="Tolerance per V-Notch(mm):   " Width="Auto" />
+                                                <TextBox Width="100" Margin="0,0,10,0" TextAlignment="Center" VerticalContentAlignment="Center"/>
+                                                <Image Source="pack://application:,,,/Images/information.png" Width="14" Height="24" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                                    <Image.ToolTip>
+                                                        <ToolTip>
+                                                            <StackPanel>
+                                                                <TextBlock Text="Deneme123 info iconu" FontWeight="Bold"/>
+                                                                <TextBlock Text="Mouse ile üzerine geldiğinizde bu bilgi kutusu açılır."/>
+                                                            </StackPanel>
+                                                        </ToolTip>
+                                                    </Image.ToolTip>
+                                                </Image>
+                                            </StackPanel>
+                                        </StackPanel>
+                                    </GroupBox>
+                                    <GroupBox Header="Wastage" Margin="0,0,0,10">
+                                        <StackPanel Margin="10">
+                                            <StackPanel Orientation="Horizontal">
+                                                <TextBlock Text="Panel/Board Wastage Percentage:   " Width="Auto"/>
+                                                <TextBox Width="100" TextAlignment="Center" VerticalContentAlignment="Center"/>
+                                            </StackPanel>
+                                        </StackPanel>
+                                    </GroupBox>
+                                    <GroupBox Header="Drawing Settings" Margin="0,0,0,10">
+                                        <StackPanel Orientation="Horizontal"  Margin="10">
+                                            <TextBlock Text="Username:   " Width="Auto"/>
+                                            <TextBox Width="160" TextAlignment="Center" VerticalContentAlignment="Center"/>
+                                        </StackPanel>
+                                    </GroupBox>
+                                    <GroupBox Header="Default Hardware Placement" Margin="0,0,0,10">
+                                        <StackPanel Margin="10,5,0,0">
+                                            <RadioButton Content="From Center" GroupName="HardwarePlacement" Margin="0,0,0,5"/>
+                                            <RadioButton Content="From Boundary" GroupName="HardwarePlacement" Margin="0,0,0,5"/>
+                                            <RadioButton Content="From Cut Out (If Applicable)" GroupName="HardwarePlacement" Margin="0,0,0,5"/>
+                                            <CheckBox Content="From Boundary (If Not Applicable)" Margin="10,0,0,5"/>
+                                            <CheckBox Content="From Center (If Not Applicable)" Margin="10,0,0,5"/>
+                                        </StackPanel>
+                                    </GroupBox>
+                                    <GroupBox Header="Offset Settings" Margin="0,0,0,10">
+                                        <StackPanel Orientation="Horizontal"  Margin="10">
+                                            <TextBlock Text="Divider:   " Width="Auto"/>
+                                            <TextBox Width="160" Text="0.5" TextAlignment="Center" VerticalContentAlignment="Center"/>
+                                        </StackPanel>
+                                    </GroupBox>
+                                    <GroupBox Header="Measurement" Margin="0,0,0,10">
+                                        <StackPanel Orientation="Horizontal"  Margin="10">
+                                            <TextBlock Text="Decimal Precision of Measurement:   " Width="Auto"/>
+                                            <ComboBox Width="100" HorizontalContentAlignment="Center">
+                                                <ComboBoxItem Content="2.12" IsSelected="True"/>
+                                                <ComboBoxItem Content="2.34"/>
+                                                <ComboBoxItem Content="2.56"/>
+                                                <ComboBox.ItemContainerStyle>
+                                                    <Style TargetType="ComboBoxItem">
+                                                        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                                                    </Style>
+                                                </ComboBox.ItemContainerStyle>
+                                            </ComboBox>
+
+                                        </StackPanel>
+                                    </GroupBox>
+                                    <GroupBox Header="Hardware Position Values">
+                                        <StackPanel Orientation="Horizontal"  Margin="10">
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="130" />
+                                                    <ColumnDefinition Width="50" />
+                                                    <ColumnDefinition Width="35" />
+                                                    <ColumnDefinition Width="113"/>
+                                                    <ColumnDefinition Width="50" />
+                                                    <ColumnDefinition Width="35" />
+                                                </Grid.ColumnDefinitions>
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition Height="Auto" />
+                                                    <RowDefinition Height="Auto" />
+                                                    <RowDefinition Height="Auto" />
+                                                    <RowDefinition Height="Auto" />
+                                                    <RowDefinition Height="Auto" />
+                                                </Grid.RowDefinitions>
+
+                                                <TextBlock Text="Horizontal Dimension 1:" Grid.Column="0" VerticalAlignment="Center" Height="16"/>
+                                                <TextBox Text="20" Grid.Row="0" Grid.Column="1" Margin="5,5,5,5" TextAlignment="Center" VerticalContentAlignment="Center"/>
+                                                <TextBlock Text="mm" Grid.Column="2" VerticalAlignment="Center" Height="16"  Grid.ColumnSpan="4"/>
+                                                <TextBlock Text="Vertical Dimension 1:" Grid.Column="3" VerticalAlignment="Center" Height="16"  Grid.ColumnSpan="2"/>
+                                                <TextBox Text="20" Grid.Row="0" Grid.Column="4" Margin="5,5,5,5" TextAlignment="Center" VerticalContentAlignment="Center"/>
+                                                <TextBlock Text="mm" Grid.Column="5" VerticalAlignment="Center" Height="16"  Grid.ColumnSpan="5"/>
+
+                                                <TextBlock Text="Horizontal Dimension 2:" Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" Height="16" />
+                                                <TextBox Text="50" Grid.Row="1" Grid.Column="1" Margin="5,5,5,5" TextAlignment="Center" VerticalContentAlignment="Center"/>
+                                                <TextBlock Text="mm"  Grid.Row="1" Grid.Column="2" VerticalAlignment="Center" Height="16"  Grid.ColumnSpan="4"/>
+                                                <TextBlock Text="Vertical Dimension 2:" Grid.Row="1" Grid.Column="3" VerticalAlignment="Center" Height="16"  Grid.ColumnSpan="2"/>
+                                                <TextBox Text="50" Grid.Row="1" Grid.Column="4" Margin="5,5,5,5" TextAlignment="Center" VerticalContentAlignment="Center"/>
+                                                <TextBlock Text="mm" Grid.Row="1" Grid.Column="5" VerticalAlignment="Center" Height="16"  Grid.ColumnSpan="5"/>
+
+                                                <TextBlock Text="Horizontal Dimension 3:" Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" Height="16" />
+                                                <TextBox Text="100" Grid.Row="2" Grid.Column="1" Margin="5,5,5,5" TextAlignment="Center" VerticalContentAlignment="Center"/>
+                                                <TextBlock Text="mm"  Grid.Row="2" Grid.Column="2" VerticalAlignment="Center" Height="16"  Grid.ColumnSpan="4"/>
+                                                <TextBlock Text="Vertical Dimension 3:" Grid.Row="2" Grid.Column="3" VerticalAlignment="Center" Height="16"  Grid.ColumnSpan="2"/>
+                                                <TextBox Text="100" Grid.Row="2" Grid.Column="4" Margin="5,5,5,5" TextAlignment="Center" VerticalContentAlignment="Center"/>
+                                                <TextBlock Text="mm" Grid.Row="2" Grid.Column="5" VerticalAlignment="Center" Height="16"  Grid.ColumnSpan="5"/>
+
+                                                <TextBlock Text="Horizontal Dimension 4:" Grid.Row="3" Grid.Column="0" VerticalAlignment="Center" Height="16" />
+                                                <TextBox Text="200" Grid.Row="3" Grid.Column="1" Margin="5,5,5,5" TextAlignment="Center" VerticalContentAlignment="Center"/>
+                                                <TextBlock Text="mm"  Grid.Row="3" Grid.Column="2" VerticalAlignment="Center" Height="16"  Grid.ColumnSpan="4"/>
+                                                <TextBlock Text="Vertical Dimension 4:" Grid.Row="3" Grid.Column="3" VerticalAlignment="Center" Height="16"  Grid.ColumnSpan="2"/>
+                                                <TextBox Text="200" Grid.Row="3" Grid.Column="4" Margin="5,5,5,5" TextAlignment="Center" VerticalContentAlignment="Center"/>
+                                                <TextBlock Text="mm" Grid.Row="3" Grid.Column="5" VerticalAlignment="Center" Height="16"  Grid.ColumnSpan="5"/>
+                                            </Grid>
+                                        </StackPanel>
+                                    </GroupBox>
+                                </StackPanel>
+                            </ScrollViewer>
+                        </TabItem>
+                            
+                        <TabItem Header="Quotation Settings">
+                            <ScrollViewer>
+                                <StackPanel Margin="10">
+
+                                <!-- Pricing Settings GroupBox -->
+                                <GroupBox Header="Pricing Settings" Margin="0,0,0,10">
+                                    <Grid Margin="0,10,0,0">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="Auto"/>
+                                        </Grid.RowDefinitions>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto" MinWidth="187" />
+                                            <ColumnDefinition Width="Auto" MinWidth="83.153" />
+                                        </Grid.ColumnDefinitions>
+                                        <Label Content="Labour Unit Cost (GBP/Hour):" VerticalAlignment="Center" HorizontalAlignment="Right" Height="26" Width="164"/>
+                                        <TextBox Grid.Row="0" Grid.Column="1" Text="60" Margin="5,5,0,5" TextAlignment="Center" VerticalContentAlignment="Center"/>
+                                        <Label Grid.Row="1" Content="Design Rate (GBP/Hour):" VerticalAlignment="Center" HorizontalAlignment="Right" Height="26" Width="139"/>
+                                        <TextBox Grid.Row="1" Grid.Column="1" Text="40" Margin="5,5,0,5" TextAlignment="Center" VerticalContentAlignment="Center"/>
+                                        <Label Grid.Row="2" Content="Decimal Precision of Price:" VerticalAlignment="Center" HorizontalAlignment="Right" Height="26" Width="148"/>
+                                        <ComboBox Grid.Row="2" Grid.Column="1" Margin="5,5,0,5" HorizontalContentAlignment="Center">
+                                            <ComboBoxItem Content="0" IsSelected="True" Margin="5,5,5,5"/>
+                                            <ComboBoxItem Content="1"/>
+                                            <ComboBoxItem Content="2"/>
+                                            <ComboBoxItem Content="3"/>
+                                            <ComboBox.ItemContainerStyle>
+                                                <Style TargetType="ComboBoxItem">
+                                                    <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                                                </Style>
+                                            </ComboBox.ItemContainerStyle>
+                                        </ComboBox>
+                                        <Label Grid.Row="3" Grid.Column="0" Content="Markup Percentage:" VerticalAlignment="Center" HorizontalAlignment="Right" Height="26" Margin="50,0,0,0" Width="115"/>
+                                        <TextBox Grid.Row="3" Grid.Column="1" Text="10%" Margin="5,5,0,5" TextAlignment="Center" VerticalContentAlignment="Center"/>
+                                    </Grid>
+                                </GroupBox>
+                                <!-- Template Settings GroupBox -->
+                                <GroupBox Header="Template Settings" Grid.Row="1" Margin="0,0,0,0" Grid.RowSpan="2" >
+                                    <Grid Margin="0,10,0,0" x:Name="AnotherGrid">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="Auto"/>
+                                        </Grid.RowDefinitions>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto"/>
+                                            <ColumnDefinition Width="*" x:Name="DynamicColumn2"/>
+                                            <ColumnDefinition Width="40" />
+                                            <ColumnDefinition Width="Auto"/>
+                                            
+
+                                        </Grid.ColumnDefinitions>
+                                        <Label Grid.Column="0" Content="Template File" VerticalAlignment="Center" HorizontalAlignment="Left" Height="26" Margin="67,0,0,0" Width="79"/>
+                                        <TextBox Grid.Column="1" Name="FileNameTextBox" Text="Quotation Temp A4.xltx" Grid.ColumnSpan="1" Margin="10,0,10,0" IsReadOnly="True" VerticalAlignment="Center"/>
+                                        <Button Grid.Row="0" Grid.Column="2" Style="{StaticResource RoundedButtonStyle}" Click="SelectFileButton1_Click" Width="20" Margin="10,10,10,10" HorizontalAlignment="Left">
+                                            <Image Source="pack://application:,,,/Images/data-searching.png" Stretch="Uniform"/>
+                                        </Button>
+                                        <Label Grid.Row="1" Content="Reset to Default Template" VerticalAlignment="Center" HorizontalAlignment="Center" Height="26" Width="146"/>
+                                        <Label Grid.Row="2" Content="Edit" VerticalAlignment="Center" HorizontalAlignment="Left" Height="26" Margin="116,0,0,0" Width="30"/>
+                                        <Button Grid.Row="1" Grid.Column="1" Height="27" Style="{StaticResource RoundedButtonStyle1}" Content="Apply" Width="80" Margin="10,10,10,10" HorizontalAlignment="Left" Grid.RowSpan="1"/>
+                                        <Button Grid.Row="2" Grid.Column="1" Height="27" Style="{StaticResource RoundedButtonStyle1}" Content="Open" Width="80" Margin="10,10,10,10" HorizontalAlignment="Left" Grid.RowSpan="2"/>
+                                    </Grid>
+                                </GroupBox>
+                                </StackPanel>
+                            </ScrollViewer>
+                        </TabItem>
+                        <TabItem Header="Visibility">
+                            <ScrollViewer>
+                                <Grid Margin="10">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto" MinHeight="175"/>
+                                        <RowDefinition/>
+                                    </Grid.RowDefinitions>
+                                    <!-- Visibility of Hardware GroupBox -->
+                                    <GroupBox Header="Visibility of Hardware in Internal Design" Margin="0,10,0,10">
+                                        <Grid Margin="10">
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="Auto"/>
+                                                <RowDefinition Height="Auto"/>
+                                                <RowDefinition Height="Auto"/>
+                                                <RowDefinition Height="Auto"/>
+                                                <RowDefinition Height="Auto"/>
+                                                <RowDefinition Height="Auto"/>
+                                            </Grid.RowDefinitions>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="150"/>
+                                                <ColumnDefinition Width="Auto"/>
+                                            </Grid.ColumnDefinitions>
+                                            <CheckBox Grid.Row="0" Grid.Column="0" Content="Corner" Margin="0,0,0,5"/>
+                                            <CheckBox Grid.Row="0" Grid.Column="1" Content="Hinge and Lid Stay" Margin="0,0,0,5"/>
+                                            <CheckBox Grid.Row="1" Grid.Column="0" Content="Brace" Margin="0,0,0,5"/>
+                                            <CheckBox Grid.Row="1" Grid.Column="1" Content="Badge" Margin="0,0,0,5"/>
+                                            <CheckBox Grid.Row="2" Grid.Column="0" Content="Handle" Margin="0,0,0,5"/>
+                                            <CheckBox Grid.Row="2" Grid.Column="1" Content="Fixing" Margin="0,0,0,5"/>
+                                            <CheckBox Grid.Row="3" Grid.Column="0" Content="Dish" Margin="0,0,0,5"/>
+                                            <CheckBox Grid.Row="3" Grid.Column="1" Content="Symbol" Margin="0,0,0,5"/>
+                                            <CheckBox Grid.Row="4" Grid.Column="0" Content="Feet" Margin="0,0,0,5"/>
+                                            <CheckBox Grid.Row="4" Grid.Column="1" Content="Castor and Wheel" Margin="0,0,0,5"/>
+                                            <CheckBox Grid.Row="5" Grid.Column="1" Content="Extrusions" Margin="0,0,0,5"/>
+                                            <CheckBox Grid.Row="5" Grid.Column="0" Content="Latch" Margin="0,0,0,5"/>
+                                        </Grid>
+                                    </GroupBox>
+                                    <!-- Visibility of Library GroupBox -->
+                                    <GroupBox Header="Visibility of Library" Grid.Row="1">
+                                        <Grid Margin="10">
+                                            <CheckBox Content="Standard Library"/>
+                                        </Grid>
+                                    </GroupBox>
+                                </Grid>
+                            </ScrollViewer> 
+                        </TabItem>
+                        <TabItem Header="Outputs">
+                            <ScrollViewer>
+                                <Grid Margin="10">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="*"/>
+                                    </Grid.RowDefinitions>
+
+                                    <!-- Cut Out, Rebate, Hole, Outline Settings -->
+                                    <Grid Margin="10">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="Auto"/>
+                                        </Grid.RowDefinitions>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto" MinWidth="130"/>
+                                            <ColumnDefinition Width="Auto"/>
+                                            <ColumnDefinition Width="Auto"/>
+                                        </Grid.ColumnDefinitions>
+
+                                        <Label Grid.Row="0" Grid.Column="0" Content="Cut Out" VerticalAlignment="Center" HorizontalAlignment="Right" />
+                                        <ComboBox Grid.Row="0" Grid.Column="1" Width="100" SelectedIndex="0" Margin="5,5,5,5" HorizontalContentAlignment="Center">
+                                            <ComboBoxItem Content="Cut Out"/>
+                                        </ComboBox>
+                                        <ComboBox Grid.Row="0" Grid.Column="2" Width="100" SelectedIndex="0" Margin="5,5,5,5" HorizontalContentAlignment="Center">
+                                            <ComboBoxItem>
+                                                <ComboBoxItem.Content>
+                                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                                        <Rectangle Width="16" Height="16" Fill="Green"/>
+                                                        <TextBlock Margin="5,0,0,0" Text="Green"/>
+                                                    </StackPanel>
+                                                </ComboBoxItem.Content>
+                                            </ComboBoxItem>
+                                        </ComboBox>
+
+                                        <Label Grid.Row="1" Grid.Column="0" Content="Rebate" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+                                        <ComboBox Grid.Row="1" Grid.Column="1" Width="100" SelectedIndex="0" Margin="5,5,5,5" HorizontalContentAlignment="Center">
+                                            <ComboBoxItem Content="Rebate"/>
+                                        </ComboBox>
+                                        <ComboBox Grid.Row="1" Grid.Column="2" Width="100" SelectedIndex="0" Margin="5,5,5,5" HorizontalContentAlignment="Center">
+                                            <ComboBoxItem>
+                                                <ComboBoxItem.Content>
+                                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                                        <Rectangle Width="16" Height="16" Fill="Red"/>
+                                                        <TextBlock Margin="5,0,0,0" Text="Red"/>
+                                                    </StackPanel>
+                                                </ComboBoxItem.Content>
+                                            </ComboBoxItem>
+                                        </ComboBox>
+
+                                        <Label Grid.Row="3" Grid.Column="0" Content="Outline" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+                                        <ComboBox Grid.Row="3" Grid.Column="1" Width="100" SelectedIndex="0" Margin="5,5,5,5" HorizontalContentAlignment="Center">
+                                            <ComboBoxItem Content="Outline"/>
+                                        </ComboBox>
+                                        <ComboBox Grid.Row="3" Grid.Column="2" Width="100" SelectedIndex="0" Margin="5,5,5,5" HorizontalContentAlignment="Center">
+                                            <ComboBoxItem>
+                                                <ComboBoxItem.Content>
+                                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                                        <Rectangle Width="16" Height="16" Fill="White"/>
+                                                        <TextBlock Margin="5,0,0,0" Text="White"/>
+                                                    </StackPanel>
+                                                </ComboBoxItem.Content>
+                                            </ComboBoxItem>
+                                        </ComboBox>
+
+                                        <Button Style="{StaticResource RoundedButtonStyle1}" Grid.Row="4" Grid.Column="1" Content="Reset Names" Margin="5" Width="100" Height="23" HorizontalAlignment="Left"/>
+                                    </Grid>
+
+
+                                    <!-- Currency Settings -->
+                                    <Grid Grid.Row="1" Margin="10">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto" MinWidth="130"/>
+                                            <ColumnDefinition Width="Auto"/>
+                                        </Grid.ColumnDefinitions>
+                                        <Label Grid.Column="0" Content="Currency:" VerticalAlignment="Center" HorizontalAlignment="Right" />
+                                        <ComboBox Grid.Column="1" Width="100" Margin="5,5,5,5"
+                  HorizontalAlignment="Center" VerticalAlignment="Center"
+                  HorizontalContentAlignment="Center">
+                                            <ComboBox.Resources>
+                                                <Style TargetType="ComboBoxItem">
+                                                    <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                                                </Style>
+                                                <Style TargetType="TextBlock">
+                                                    <Setter Property="HorizontalAlignment" Value="Center"/>
+                                                </Style>
+                                            </ComboBox.Resources>
+                                            <ComboBoxItem Content="GBP" IsSelected="True"/>
+                                            <ComboBoxItem Content="USD"/>
+                                            <ComboBoxItem Content="EUR"/>
+                                        </ComboBox>
+                                    </Grid>
+
+                                    <!-- Nesting Settings -->
+                                    <GroupBox Grid.Row="2" Header="Nesting Settings" Margin="0,0,0,10">
+                                        <Grid Margin="0,10,0,0">
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="Auto"/>
+                                                <RowDefinition Height="Auto"/>
+                                                <RowDefinition Height="Auto"/>
+                                            </Grid.RowDefinitions>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="Auto" MinWidth="60"/>
+                                                <ColumnDefinition Width="Auto"/>
+                                                <ColumnDefinition Width="Auto" MinWidth="40"/>
+                                                <ColumnDefinition Width="Auto" MinWidth="130"/>
+                                                <ColumnDefinition Width="Auto"/>
+                                            </Grid.ColumnDefinitions>
+
+                                            <Label Grid.Row="0" Grid.Column="0" Content="Gap" VerticalAlignment="Center"/>
+
+                                            <Label Grid.Row="1" Grid.Column="0" Content="Panel:" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+                                            <Label Grid.Row="2" Grid.Column="0" Content="Border:" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+
+                                            <TextBox Grid.Row="1" Grid.Column="1" Width="50" Text="5" Margin="5,5,5,5" TextAlignment="Center" VerticalContentAlignment="Center"/>
+                                            <TextBox Grid.Row="2" Grid.Column="1" Width="50" Text="5" Margin="5,5,5,5" TextAlignment="Center" VerticalContentAlignment="Center"/>
+
+                                            <Label Grid.Row="1" Grid.Column="2" Content="mm" VerticalAlignment="Center"/>
+                                            <Label Grid.Row="2" Grid.Column="2" Content="mm" VerticalAlignment="Center"/>
+
+                                            <Label Grid.Row="0" Grid.Column="3" Content="Sheet Orientation" HorizontalAlignment="Left" Margin="5,5,5,5"/>
+                                            <RadioButton Grid.Row="1" Grid.Column="3" Content="Landscape" IsChecked="True"  Margin="25,5,5,5"/>
+                                            <RadioButton Grid.Row="2" Grid.Column="3" Content="Portrait"  Margin="25,5,5,5"/>
+
+
+
+                                            <Label Grid.Row="0" Grid.Column="5" Content="Starting Point" HorizontalAlignment="Left" Margin="5,5,5,5"/>
+                                            <RadioButton Grid.Row="1" Grid.Column="5" Content="Left to Right" IsChecked="True" Margin="25,5,5,5"/>
+                                            <RadioButton Grid.Row="2" Grid.Column="5" Content="Bottom to Top" Margin="25,5,5,5"/>
+                                        </Grid>
+                                    </GroupBox>
+
+                                    <!-- Shared Library -->
+                                    <GroupBox Grid.Row="3" Header="Shared Library" Margin="0,0,0,10">
+                                        <Grid x:Name="MainGrid" Margin="10">
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="Auto"/>
+                                                <RowDefinition Height="Auto"/>
+                                                <RowDefinition Height="Auto"/>
+                                                <RowDefinition Height="Auto"/>
+                                                <RowDefinition Height="Auto"/>
+                                                <RowDefinition Height="Auto"/>
+                                            </Grid.RowDefinitions>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="63.833"/>
+                                                <ColumnDefinition x:Name="DynamicColumn" Width="*" />
+                                                <ColumnDefinition Width="20" />
+
+
+                                                <ColumnDefinition Width="Auto" />
+
+                                            </Grid.ColumnDefinitions>
+
+                                            <Label Grid.Column="0" Content="Library" VerticalAlignment="Center" HorizontalAlignment="Left" Grid.ColumnSpan="2" Margin="18,0,0,0"/>
+                                            <TextBox Grid.Row="0" Grid.Column="1" Name="FilePathTextBox0" Grid.ColumnSpan="1" Text="C:\Users\Public\Documents\AutoCase\3D Case Design 2021\Base Design\Library\" Margin="10,6,10,10" IsReadOnly="True"/>
+                                            <Button Grid.Row="0" Grid.Column="2" Name="SelectFileButton0" Style="{StaticResource RoundedButtonStyle}" Click="SelectFileButton_Click" Width="20" Margin="0,10,0,10" HorizontalAlignment="Center">
+                                                <Image Source="pack://application:,,,/Images/data-searching.png" Stretch="Uniform"/>
+                                            </Button>
+
+                                            <Label Grid.Row="1" Grid.Column="0" Content="Project" VerticalAlignment="Center" HorizontalAlignment="Left" Grid.ColumnSpan="2" Margin="17,0,0,0"/>
+                                            <TextBox Grid.Row="1" Grid.Column="1" Name="FilePathTextBox1" Grid.ColumnSpan="1" Text="C:\Users\Public\Documents\AutoCase\3D Case Design 2021\Projects\" Margin="10,6,10,10" IsReadOnly="True"/>
+                                            <Button Grid.Row="1" Grid.Column="2" Name="SelectFileButton1" Style="{StaticResource RoundedButtonStyle}" Click="SelectFileButton_Click" Width="20" Margin="0,10,0,10" HorizontalAlignment="Center">
+                                                <Image Source="pack://application:,,,/Images/data-searching.png" Stretch="Uniform"/>
+                                            </Button>
+
+                                            <Label Grid.Row="2" Grid.Column="0" Content="Nesting" VerticalAlignment="Center" HorizontalAlignment="Left" Grid.ColumnSpan="2" Margin="13,0,0,0"/>
+                                            <TextBox Grid.Row="2" Grid.Column="1" Name="FilePathTextBox2" Grid.ColumnSpan="1" Text="C:\Users\Public\Documents\AutoCase\3D Case Design 2021\Nesting Results\" Margin="10,6,10,10" IsReadOnly="True"/>
+                                            <Button Grid.Row="2" Grid.Column="2" Name="SelectFileButton2" Style="{StaticResource RoundedButtonStyle}" Click="SelectFileButton_Click" Width="20" Margin="0,10,0,10" HorizontalAlignment="Center">
+                                                <Image Source="pack://application:,,,/Images/data-searching.png" Stretch="Uniform"/>
+                                            </Button>
+
+                                            <Label Grid.Row="3" Grid.Column="0" Content="Material" VerticalAlignment="Center" HorizontalAlignment="Left" Grid.ColumnSpan="2" Margin="11,0,0,0"/>
+                                            <TextBox Grid.Row="3" Grid.Column="1" Name="FilePathTextBox3" Grid.ColumnSpan="1" Text="C:\Users\Public\Documents\AutoCase\3D Case Design 2021\Base Design\Material Libraries\" Margin="10,6,10,10" IsReadOnly="True"/>
+                                            <Button Grid.Row="3" Grid.Column="2" Name="SelectFileButton3" Style="{StaticResource RoundedButtonStyle}" Click="SelectFileButton_Click" Width="20" Margin="0,10,0,10" HorizontalAlignment="Center">
+                                                <Image Source="pack://application:,,,/Images/data-searching.png" Stretch="Uniform"/>
+                                            </Button>
+
+                                            <Label Grid.Row="4" Content="Quotation" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                            <TextBox Grid.Row="4" Grid.Column="1" Name="FilePathTextBox4" Grid.ColumnSpan="1" Text="C:\Users\Public\Documents\AutoCase\3D Case Design 2021\Quotations\" Margin="10,6,10,10" IsReadOnly="True"/>
+                                            <Button Grid.Row="4" Grid.Column="2" Name="SelectFileButton4" Style="{StaticResource RoundedButtonStyle}" Click="SelectFileButton_Click" Width="20" Margin="0,10,0,10" HorizontalAlignment="Center">
+                                                <Image Source="pack://application:,,,/Images/data-searching.png" Stretch="Uniform"/>
+                                            </Button>
+
+                                            <Label Grid.Row="5" Grid.Column="0" Content="Database" VerticalAlignment="Center" HorizontalAlignment="Left" Grid.ColumnSpan="2" Margin="5,0,0,0"/>
+                                            <TextBox Grid.Row="5" Grid.Column="1" Name="FilePathTextBox5" Grid.ColumnSpan="1" Text="C:\Users\Public\Documents\AutoCase\3D Case Design 2021\Database\"  Margin="10,6,10,10" IsReadOnly="True"/>
+                                            <Button Grid.Row="5" Grid.Column="2" Name="SelectFileButton5" Style="{StaticResource RoundedButtonStyle}" Click="SelectFileButton_Click" Width="20" Margin="0,10,0,10" HorizontalAlignment="Center">
+                                                <Image Source="pack://application:,,,/Images/data-searching.png" Stretch="Uniform"/>
+                                            </Button>
+
+                                        </Grid>
+                                    </GroupBox>
+
+                                </Grid>
+                            </ScrollViewer>
+                        </TabItem>
+                    </TabControl>
+
+                    <!-- Alt kısımdaki butonlar -->
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Bottom" Grid.Row="2" Grid.ColumnSpan="2" Margin="0,0,10,0" Height="35" Grid.Column="1" Width="375">
+                        <!-- Dışa aktarım ve uygulama butonları -->
+                        <Button Style="{StaticResource RoundedButtonStyle}" Content="Import..." Width="65" Margin="5"/>
+                        <Button Style="{StaticResource RoundedButtonStyle}" Content="Export..." Width="65" Margin="5"/>
+                        <Button Style="{StaticResource RoundedButtonStyle1}" Content="OK" Width="65" Margin="5"/>
+                        <Button Style="{StaticResource RoundedButtonStyle1}" Content="Cancel" Width="65" Margin="5"/>
+                        <Button Style="{StaticResource RoundedButtonStyle1}" Content="Apply" Width="65" Margin="5"/>
+                    </StackPanel>
+                </Grid>
+            </Border>
+        </Grid>
+    </local:DpiDecorator>
+</Window>
